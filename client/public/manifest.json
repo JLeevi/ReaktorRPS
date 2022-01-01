@@ -1,0 +1,8 @@
+{
+  "short_name": "Reaktor 2022 pre-assignment",
+  "name": "Reaktor 2022 pre-assignment",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

@@ -1,0 +1,83 @@
+@import './config.css';
+
+.gamesContainer {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    margin-bottom: 60px;
+}
+
+.liveGamesContainer {
+    width: 100%;
+    min-height: 50vh;
+}
+
+.header {
+    font-family: var(--font-header);
+    font-weight: var(--font-weight-regular);
+    color: var(--color-dark);
+}
+
+.liveGameTable {
+    width: 100%;
+    display: block;
+    text-align: left;
+}
+
+.liveGameTable tr {
+    height: 50px;
+    background: var(--color-background);
+    transition-duration: .3s;
+}
+
+.liveGameTable tr:nth-child(odd) {
+    background: var(--color-white);
+}
+
+.liveGameTable th {
+    text-align: left;
+    padding-right: 50px;
+    padding-left: 10px;
+    box-sizing: border-box;
+    font-weight: var(--font-weight-bold);
+    font-family: var(--font-header);
+    min-width: 150px;
+}
+
+.liveGameTable .wide {
+    min-width: 250px;
+}
+
+.liveGameTable td {
+    padding-right: 50px;
+    padding-left: 10px;
+    font-weight: var(--font-weight-regular);
+    font-family: var(--font-basic);
+}
+
+.finishedGame {
+    box-shadow: var(--shadow);
+    transform: scale(1.025);
+}
+
+.winningPlayer {
+    color: var(--color-success);
+}
+
+.losingPlayer {
+    color: var(--color-danger);
+}
+
+.liveGamesContainer {
+    width: 100%;
+    min-height: 50vh;
+}
+
+.showHistoryButton {
+    width: 250px;
+    height: 45px;
+    background: var(--color-white);
+    color: var(--color-white);
+    font-family: var(--font-basic);
+    margin-top: 40px;
+}
