@@ -5,6 +5,7 @@ import {
 } from './types';
 import gameCache from './utils/gameCache';
 import gameUtils from './utils/historyGames';
+import logger from './utils/logger';
 
 const getPlayerList = async () => {
   const cached = gameCache.getPlayerSet();
@@ -27,9 +28,13 @@ const updatePlayerStats = async (playerResult: HistoryPlayerResult) => {
 
 const saveGameResults = async (result: GameResult) => {
   const document = gameUtils.convertResultToDbDocument(result);
-  await PlayerGame.create(document);
-  await updatePlayerStats(document.playerA);
-  await updatePlayerStats(document.playerB);
+  try {
+    await PlayerGame.create(document);
+    await updatePlayerStats(document.playerA);
+    await updatePlayerStats(document.playerB);
+  } catch (error) {
+    logger.error('Error creating PlayerGame document:\t', error);
+  }
 };
 
 const saveGameBatch = async (results: GameResult[]) => {
@@ -54,7 +59,11 @@ const clearFullPlayerData = async () => {
 
 const initPlayerData = async (playerData: PlayerStats[]) => {
   await clearPlayers();
-  await Player.insertMany(playerData);
+  try {
+    await Player.insertMany(playerData);
+  } catch (error) {
+    logger.error('Error inserting Player documents:\t', error);
+  }
 };
 
 const getGameFilter = (playerName: string, cursor?: string) => {

@@ -7,7 +7,7 @@ import usePlayerData from "../../hooks/usePlayerData";
 
 function HistoryContainer() {
   const [playerListOpen, setPlayerListOpen] = useState<boolean>(false);
-  const [{ stats, games }, fetchPlayerData, loadMorePlayerData] =
+  const [{ stats, games }, fetchPlayerData, loadMorePlayerData, isLoading] =
     usePlayerData();
 
   const choosePlayer = (playerName: string) => {
@@ -35,6 +35,7 @@ function HistoryContainer() {
           stats={stats}
           history={games}
           loadMore={loadMorePlayerData}
+          isLoading={isLoading}
         />
       )}
     </div>

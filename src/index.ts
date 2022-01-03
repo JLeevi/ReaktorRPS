@@ -6,6 +6,7 @@ import config from './config';
 import gamesRouter from './routes/games';
 import historyUtils from './utils/historyGames';
 import startWebSocket from './websockets';
+import logger from './utils/logger';
 
 const app = express();
 
@@ -18,7 +19,7 @@ mongoose.connect(config.DB_URI);
 const server = http.createServer(app);
 
 server.listen(config.PORT, () => {
-  console.log(`Server running on port ${config.PORT}`);
+  logger.info(`Server running on port ${config.PORT}`);
   historyUtils.initPlayerData();
 });
 

@@ -68,6 +68,14 @@
     right: 10px;
 }
 
+.playerList div p {
+    width: 100%;
+    height: 60px;
+    padding: 0 40px 0 40px;
+    font-family: var(--font-basic);
+    font-size: var(--font-size-med);
+}
+
 .playerList div button {
     width: 100%;
     height: 60px;
@@ -172,4 +180,17 @@
 .historyTable .drawPlayer {
     background: var(--color-dark);
     color: var(--color-white);
+}
+
+.loadMoreButton {
+    width: 170px;
+    height: 40px;
+    background: var(--color-white);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-shadow);
+    font-family: var(--font-basic);
+    font-size: var(--font-size-med);
+    cursor: pointer;
+    color: var(--color-dark);
+    display: block;   
 }

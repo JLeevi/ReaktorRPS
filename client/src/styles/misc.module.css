@@ -2,21 +2,50 @@
 
 .header {
     width: 100%;
+    max-width: 1200px;
+    text-align: left;
+    margin: 0 auto;
 }
 
 .header h1 {
-    text-align: center;
+    display: inline-block;
     font-family: var(--font-header);
-    color: var(--color-brand);
-    font-size: var(--font-size-header);
+    color: var(--color-white);
+    font-size: 32px;
+    background: var(--color-brand);
+    padding: 20px;
+    box-sizing: border-box;
+    box-shadow: var(--shadow);
+    border-radius: 10px;
+}
+
+.header h3 {
+    display: block;
+    font-family: var(--font-header);
+    color: var(--color-dark);
+    font-size: var(--font-size-large);
 }
 
 .header p {
-    text-align: center;
     font-family: var(--font-basic);
     color: var(--color-dark);
     font-size: var(--font-size-med);
     line-height: 40px;
+
+    padding: 20px;
+    box-sizing: border-box;
+    box-shadow: var(--shadow);
+    border-radius: 10px;
+    background: var(--color-white);
+    display: inline-block;
+}
+
+.header p .number {
+    color: var(--color-brand);
+    font-size: var(--font-size-header);
+    font-weight: var(--font-weight-bold);
+    font-family: var(--font-header);
+    margin-right: 15px;
 }
 
 .header p span {

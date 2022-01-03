@@ -8,9 +8,9 @@ const gameOutcomes: {[keyA in Weapon]: {[keyB in Weapon]: GameOutcome}} = {
     SCISSORS: 'A',
   },
   PAPER: {
-    ROCK: 'B',
+    ROCK: 'A',
     PAPER: 'DRAW',
-    SCISSORS: 'A',
+    SCISSORS: 'B',
   },
   SCISSORS: {
     ROCK: 'B',

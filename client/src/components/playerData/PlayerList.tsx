@@ -26,12 +26,9 @@ function PlayerList({ toggleList, choosePlayer }: Props) {
         Close
       </button>
       <div>
+        {players.length === 0 && <p>Loading players...</p>}
         {players.map((p) => (
-          <button
-            style={{ display: "block" }}
-            onClick={() => choosePlayer(p)}
-            key={p}
-          >
+          <button onClick={() => choosePlayer(p)} key={p}>
             {p}
           </button>
         ))}
