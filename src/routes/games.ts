@@ -3,16 +3,15 @@ import gameService from '../services/games';
 
 const gamesRouter = Router();
 
-gamesRouter.get('/', (_, res) => {
-  const data = gameService.getPlayerList();
+gamesRouter.get('/players', async (_, res) => {
+  const data = await gameService.getPlayerList();
   res.json(data);
 });
 
-gamesRouter.get('/player/:playerName', (req, res) => {
+gamesRouter.get('/player/:playerName', async (req, res) => {
   const { playerName } = req.params;
-  const data = playerName ? gameService.getFullPlayerData(playerName) : {
-    error: 'Player not found',
-  };
+  const { cursor } = req.query as {cursor: string | undefined};
+  const data = await gameService.getPlayerHistory(playerName, cursor);
   res.json(data);
 });
 

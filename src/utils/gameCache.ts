@@ -1,44 +1,29 @@
 import {
-  GameBegin, GameResult, LiveGame, PlayerStats,
+  GameBegin, LiveGame, PlayerStats,
 } from '../types';
 import cache from '../cache';
 import constants from './constants';
 import liveGameUtils from './liveGames';
 
 const getPlayerStats = (playerName: string): PlayerStats => cache.get(`players/stats/${playerName}`)
-  ?? constants.initialPlayerStats;
+  ?? { ...constants.initialPlayerStats, name: playerName };
 
-const setPlayerStats = (stats:any, playerName: string) => cache.set(`players/stats/${playerName}`, stats);
+const setPlayerStats = (stats: PlayerStats, playerName: string) => cache.set(
+  `players/stats/${playerName}`,
+  { ...stats, name: playerName },
+);
 
-const getPlayerHistory = (playerName: string): GameResult[] => cache.get(`players/history/${playerName}`) ?? [];
+const getPlayerSet = (): Set<string> | null => cache.get('players');
 
-const getPlayerList = (): string[] => cache.get('players') ?? [];
-
-const addToPlayerList = (playerName: string) => {
-  const currentList = getPlayerList();
-  const updatedSet = new Set([...currentList, playerName]);
-  const updatedPlayers = [...updatedSet];
-  cache.set('players', updatedPlayers);
+const addToPlayerSet = (player: string) => {
+  const currentPlayers = getPlayerSet() ?? new Set([]);
+  const updatedSet = currentPlayers.add(player);
+  cache.set('players', updatedSet);
 };
 
-const getFullPlayerData = (playerName: string) => {
-  const history = getPlayerHistory(playerName);
-  const stats = getPlayerStats(playerName);
-  return {
-    name: playerName,
-    history,
-    stats,
-  };
-};
-
-const addToPlayerHistory = (game: GameResult, playerName: string) => {
-  const currentHistory = getPlayerHistory(playerName);
-  const updatedHistory = [game, ...currentHistory];
-  cache.set(`players/history/${playerName}`, updatedHistory);
-};
-
-const setPlayerHistory = (history: GameResult[], playerName: string) => {
-  cache.set(`players/history/${playerName}`, history);
+const initPlayerSet = (players: string[]) => {
+  const playerSet = new Set<string>(players);
+  cache.set('players', playerSet);
 };
 
 const addLiveGame = (game: GameBegin) => {
@@ -54,17 +39,14 @@ const removeLiveGame = (gameId: string) => {
   cache.set('liveGames', updated);
 };
 
-const getLiveGames = () => cache.get('liveGames') ?? [] as LiveGame[];
+const getLiveGames = () => (cache.get('liveGames') ?? []) as LiveGame[];
 
 export default {
   getPlayerStats,
   setPlayerStats,
-  getPlayerHistory,
-  getPlayerList,
-  addToPlayerList,
-  setPlayerHistory,
-  getFullPlayerData,
-  addToPlayerHistory,
+  getPlayerSet,
+  addToPlayerSet,
+  initPlayerSet,
   addLiveGame,
   removeLiveGame,
   getLiveGames,

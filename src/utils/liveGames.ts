@@ -1,7 +1,7 @@
 import {
   GameBegin, GameResult, LiveEvent, LiveGame,
 } from '../types';
-import utils from './utils';
+import utils from './historyGames';
 import truthtables from './truthtables';
 
 const convertBeginToLiveGame = (game: GameBegin): LiveGame => {

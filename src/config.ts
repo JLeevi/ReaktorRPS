@@ -1,28 +1,21 @@
 require('dotenv').config();
 
 const {
-  PORT, API_URL, HISTORY_URL, WS_URL, WS_HOST_PATH,
+  PORT, DB_URI,
 } = process.env;
 
 if (!PORT) {
   throw Error('PORT not set. Check .env');
 }
 
-if (!API_URL) {
-  throw Error('API_URL not set. Check .env');
+if (!DB_URI) {
+  throw Error('DB_URI not set. Check .env');
 }
 
-if (!HISTORY_URL) {
-  throw Error('HISTORY_URL not set. Check .env');
-}
-
-if (!WS_URL) {
-  throw Error('WS_URL not set. Check .env');
-}
-
-if (!WS_HOST_PATH) {
-  throw Error('WS_HOST_PATH not set. Check .env');
-}
+const API_URL = 'https://bad-api-assignment.reaktor.com';
+const HISTORY_URL = 'https://bad-api-assignment.reaktor.com/rps/history';
+const WS_URL = 'ws://bad-api-assignment.reaktor.com/rps/live';
+const WS_HOST_PATH = '/live';
 
 export default {
   PORT,
@@ -30,4 +23,5 @@ export default {
   HISTORY_URL,
   WS_URL,
   WS_HOST_PATH,
+  DB_URI,
 };

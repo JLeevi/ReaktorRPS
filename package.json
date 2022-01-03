@@ -8,9 +8,12 @@
     "start": "node build/index.js",
     "dev": "ts-node-dev src/index.ts",
     "tsc": "tsc",
-    "build-server": "tsc",
+    "clear-build": "rm -rf build",
+    "build-server": "npm run clear-build && tsc",
     "build-client": "cd client && npm install && npm run build-prod && cp -r build ../build",
-    "build": "npm run build-server && npm run build-client"
+    "build": "npm run build-server && npm run build-client",
+    "start:dev": "npm run dev && cd client && npm start"
+
   },
   "author": "Leevi Jäkälä",
   "license": "ISC",
@@ -35,6 +38,7 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.2",
     "memory-cache": "^0.2.0",
+    "mongoose": "^6.1.4",
     "ws": "^8.4.0"
   },
   "engines": {

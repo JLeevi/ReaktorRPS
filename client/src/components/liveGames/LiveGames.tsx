@@ -8,24 +8,11 @@ function LiveGames() {
   return (
     <div className={styles.liveGamesContainer}>
       <h2 className={styles.header}>Live games</h2>
-      <table className={styles.liveGameTable}>
-        <thead>
-          <tr>
-            <th className={styles.wide}>Player A</th>
-            <th>Weapon</th>
-            <th>Outcome</th>
-
-            <th className={styles.wide}>Player B</th>
-            <th>Weapon</th>
-            <th>Outcome</th>
-          </tr>
-        </thead>
-        <tbody>
-          {liveGames.map((g) => (
-            <LiveGameCard key={g.gameId} game={g} />
-          ))}
-        </tbody>
-      </table>
+      <div>
+        {liveGames.map((g) => (
+          <LiveGameCard key={g.gameId} game={g} />
+        ))}
+      </div>
     </div>
   );
 }

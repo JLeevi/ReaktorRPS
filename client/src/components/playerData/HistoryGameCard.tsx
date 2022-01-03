@@ -1,14 +1,39 @@
 import React from "react";
-import { GameResult } from "../../types";
+import renderUtils from "../../renderUtils";
+import { HistoryGame } from "../../types";
+import styles from "../../styles/history.module.css";
 
-function HistoryGameCard({ game }: { game: GameResult }) {
+function HistoryGameCard({ game }: { game: HistoryGame }) {
+  const getOutcomeClassName = (
+    outcome: "WIN" | "DRAW" | "LOSS" | undefined
+  ) => {
+    switch (outcome) {
+      case "WIN": {
+        return styles.winningPlayer;
+      }
+      case "LOSS": {
+        return styles.losingPlayer;
+      }
+      case "DRAW": {
+        return styles.drawPlayer;
+      }
+      default: {
+        return "";
+      }
+    }
+  };
+  const classA = getOutcomeClassName(game.playerA.outcome);
+  const classB = getOutcomeClassName(game.playerB.outcome);
   return (
     <tr>
-      <td>{game.playerA.name}</td>
-      <td>{game.playerA.played ?? "-"}</td>
-
-      <td>{game.playerB.name}</td>
-      <td>{game.playerB.played ?? "-"}</td>
+      <td className={classA}>{game.playerA.name}</td>
+      <td className={classA}>
+        {renderUtils.getHandIcon(game.playerA.played, true)}
+      </td>
+      <td className={classB}>
+        {renderUtils.getHandIcon(game.playerB.played, true)}
+      </td>
+      <td className={classB}>{game.playerB.name}</td>
 
       <td>{new Date(game.t).toLocaleString()}</td>
     </tr>

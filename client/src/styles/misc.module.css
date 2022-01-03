@@ -1,0 +1,26 @@
+@import './config.css';
+
+.header {
+    width: 100%;
+}
+
+.header h1 {
+    text-align: center;
+    font-family: var(--font-header);
+    color: var(--color-brand);
+    font-size: var(--font-size-header);
+}
+
+.header p {
+    text-align: center;
+    font-family: var(--font-basic);
+    color: var(--color-dark);
+    font-size: var(--font-size-med);
+    line-height: 40px;
+}
+
+.header p span {
+    color: var(--color-brand);
+    font-weight: var(--font-weight-bold);
+    font-family: var(--font-header);
+}

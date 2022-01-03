@@ -1,20 +1,24 @@
 import React from "react";
-import { PlayerData } from "../../types";
+import { HistoryGame, PlayerStats } from "../../types";
 import Statistics from "./Statistics";
 import liveStyles from "../../styles/games.module.css";
 import historyStyles from "../../styles/history.module.css";
 import HistoryGames from "./HistoryGames";
 
-function PlayerDataBlock({ player }: { player: PlayerData | null }) {
+function PlayerDataBlock({
+  stats,
+  history,
+  loadMore,
+}: {
+  stats: PlayerStats;
+  history: HistoryGame[];
+  loadMore: () => void;
+}) {
   return (
     <div className={historyStyles.playerHistory}>
-      <h2 className={liveStyles.header}>{player?.name}</h2>
-      {player && (
-        <>
-          <Statistics player={player.stats} />
-          <HistoryGames playerId={player.name} games={player.history} />
-        </>
-      )}
+      <h2 className={liveStyles.header}>{stats.name}</h2>
+      <Statistics stats={stats} />
+      <HistoryGames loadMore={loadMore} games={history} />
     </div>
   );
 }

@@ -1,83 +1,145 @@
 @import './config.css';
 
-.gamesContainer {
-    width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
-    margin-bottom: 60px;
-}
-
-.liveGamesContainer {
-    width: 100%;
-    min-height: 50vh;
-}
-
 .header {
     font-family: var(--font-header);
-    font-weight: var(--font-weight-regular);
+    font-weight: var(--font-weight-bold);
     color: var(--color-dark);
 }
 
-.liveGameTable {
+.liveGamesContainer {
     width: 100%;
-    display: block;
-    text-align: left;
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-top: 60px;
 }
 
-.liveGameTable tr {
-    height: 50px;
-    background: var(--color-background);
+.game {
+    width: 320px;
+    height: auto;
+    display: inline-block;
+    background: var(--color-white);
+    box-shadow: var(--shadow);
+    border-radius: 10px;
+    padding: 20px 10px;
+    margin: 0 50px 50px 0;
+    box-sizing: border-box;
+    padding-top: 40px;
+    position: relative;
     transition-duration: .3s;
 }
 
-.liveGameTable tr:nth-child(odd) {
-    background: var(--color-white);
+.finishedGame {
+    transform: scale(1.1);
+    z-index: 2;
+    box-shadow: 0 0 12px 2px rgba(100,100,100,0.3);
 }
 
-.liveGameTable th {
-    text-align: left;
-    padding-right: 50px;
-    padding-left: 10px;
+.game .tiimalasi {
+    width: 50px;
+    height: 50px;
+    background: var(--color-white);
+    border-radius: 100%;
+    top: -25px;
+    left: 135px;
+    position: absolute;
+    border: 1px solid rgb(220,220,220);
+}
+
+.game .tiimalasi img {
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.finishedGame .tiimalasi {
+    display: none;
+}
+
+.game .player {
+    width: 100%;
+    display: block;
+    background: var(--color-background);
+    border-radius: 50px;
+    height: 50px;
+    padding: 0 10px;
+    margin: 10px 0 10px 0;
     box-sizing: border-box;
+    position: relative;
+}
+
+.game .winningPlayer {
+    background: var(--color-success);
+    color: var(--color-white);
+}
+
+.game .losingPlayer {
+    background: var(--color-danger);
+}
+
+.game .drawPlayer {
+    background: var(--color-dark);
+}
+
+.game .player .picture, .game .player .played {
+    background: var(--color-brand);
+    display: inline-block;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    padding-top: 10px;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: var(--font-size-med);
     font-weight: var(--font-weight-bold);
     font-family: var(--font-header);
-    min-width: 150px;
-}
-
-.liveGameTable .wide {
-    min-width: 250px;
-}
-
-.liveGameTable td {
-    padding-right: 50px;
-    padding-left: 10px;
-    font-weight: var(--font-weight-regular);
-    font-family: var(--font-basic);
-}
-
-.finishedGame {
-    box-shadow: var(--shadow);
-    transform: scale(1.025);
-}
-
-.winningPlayer {
-    color: var(--color-success);
-}
-
-.losingPlayer {
-    color: var(--color-danger);
-}
-
-.liveGamesContainer {
-    width: 100%;
-    min-height: 50vh;
-}
-
-.showHistoryButton {
-    width: 250px;
-    height: 45px;
-    background: var(--color-white);
     color: var(--color-white);
-    font-family: var(--font-basic);
-    margin-top: 40px;
+}
+
+.game .player p {
+    display: inline-block;
+    font-size: var(--font-size-med);
+    font-family: var(--font-header);
+    font-weight: var(--font-weight-bold);
+    padding: 0;
+    padding-left: 50px;
+    margin-top: 15px;
+    color: var(--color-dark);
+}
+
+.finishedGame .player p {
+    color: var(--color-white);
+}
+
+.game .player .played {
+    background: transparent;
+    color: var(--color-dark);
+    left: initial;
+    right: 5px;
+}
+
+.finishedGame .player .played {
+    background: var(--color-white);
+}
+
+.game .player .played img {
+    height: 30px;
+    width: auto;
+    margin-top: -5px;
+}
+
+.game .vs {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: var(--font-size-med);
+    font-family: var(--font-header);
+    font-weight: 900;
+    color: var(--color-brand);
+    text-transform: uppercase;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }

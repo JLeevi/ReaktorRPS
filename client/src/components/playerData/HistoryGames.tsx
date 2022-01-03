@@ -1,54 +1,34 @@
-import React, { useEffect, useState } from "react";
-import { GameResult } from "../../types";
-import liveStyles from "../../styles/games.module.css";
+import React from "react";
+import { HistoryGame } from "../../types";
+import styles from "../../styles/history.module.css";
 import HistoryGameCard from "./HistoryGameCard";
 
-const INITIAL_VISIBLE_COUNT = 50;
-
 function HistoryGames({
-  playerId,
+  loadMore,
   games,
 }: {
-  playerId: string;
-  games: GameResult[];
+  games: HistoryGame[];
+  loadMore: () => void;
 }) {
-  const [visibleCount, setVisibleCount] = useState<number>(
-    INITIAL_VISIBLE_COUNT
-  );
-
-  const increaseVisbleCount = () => {
-    setVisibleCount((c) => c + INITIAL_VISIBLE_COUNT);
-  };
-
-  useEffect(() => {
-    setVisibleCount(INITIAL_VISIBLE_COUNT);
-  }, [playerId]);
-
-  const visibleGames = games.slice(0, visibleCount);
-
   return (
     <>
-      <table className={liveStyles.liveGameTable}>
+      <table className={styles.historyTable}>
         <thead>
           <tr>
-            <th className={liveStyles.wide}>Player A</th>
-            <th>Weapon</th>
-
-            <th className={liveStyles.wide}>Player B</th>
-            <th>Weapon</th>
-
+            <th className={styles.wide}>Player A</th>
+            <th />
+            <th />
+            <th className={styles.wide}>Player B</th>
             <th>Time</th>
           </tr>
         </thead>
         <tbody>
-          {visibleGames.map((game) => (
+          {games.map((game) => (
             <HistoryGameCard key={game.gameId} game={game} />
           ))}
         </tbody>
       </table>
-      {games.length > visibleCount && (
-        <button onClick={increaseVisbleCount}>Load more</button>
-      )}
+      <button onClick={loadMore}>Load more</button>
     </>
   );
 }

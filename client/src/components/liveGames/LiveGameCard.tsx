@@ -1,6 +1,7 @@
 import React from "react";
-import { LiveGame } from "../../types";
+import { LiveGame, Weapon } from "../../types";
 import styles from "../../styles/games.module.css";
+import renderUtils from "../../renderUtils";
 
 function LiveGameCard({ game }: { game: LiveGame }) {
   const getOutcomeClassName = (
@@ -13,24 +14,44 @@ function LiveGameCard({ game }: { game: LiveGame }) {
       case "LOSS": {
         return styles.losingPlayer;
       }
+      case "DRAW": {
+        return styles.drawPlayer;
+      }
       default: {
         return "";
       }
     }
   };
 
+  const getInitial = (name: string) => name.slice(0, 1);
+
   const aClassName = getOutcomeClassName(game.playerA.outcome);
   const bClassName = getOutcomeClassName(game.playerB.outcome);
   return (
-    <tr className={game.isFinished ? styles.finishedGame : ""}>
-      <td className={aClassName}>{game.playerA.name}</td>
-      <td className={aClassName}>{game.playerA.played ?? "-"}</td>
-      <td className={aClassName}>{game.playerA.outcome ?? "-"}</td>
-
-      <td className={bClassName}>{game.playerB.name}</td>
-      <td className={bClassName}>{game.playerB.played ?? "-"}</td>
-      <td className={bClassName}>{game.playerB.outcome ?? "-"}</td>
-    </tr>
+    <div
+      className={
+        game.isFinished ? `${styles.finishedGame} ${styles.game}` : styles.game
+      }
+    >
+      <div className={styles.tiimalasi}>
+        <img alt="hourglass" src="/icons/icons8-hourglass.gif" />
+      </div>
+      <div className={`${styles.player} ${aClassName}`}>
+        <div className={styles.picture}>{getInitial(game.playerA.name)}</div>
+        <p>{game.playerA.name}</p>
+        <div className={styles.played}>
+          {renderUtils.getHandIcon(game.playerA.played as Weapon | undefined)}
+        </div>
+      </div>
+      <p className={styles.vs}>VS</p>
+      <div className={`${styles.player} ${bClassName}`}>
+        <div className={styles.picture}>{getInitial(game.playerB.name)}</div>
+        <p>{game.playerB.name}</p>
+        <div className={styles.played}>
+          {renderUtils.getHandIcon(game.playerB.played as Weapon | undefined)}
+        </div>
+      </div>
+    </div>
   );
 }
 

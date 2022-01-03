@@ -6,6 +6,10 @@ export type PlayerResult = {
   played: Weapon;
 };
 
+export type HistoryPlayerResult = PlayerResult & {
+  outcome: RelativeGameOutcome;
+};
+
 export type GameResult = {
   type: "GAME_RESULT";
   gameId: string;
@@ -19,6 +23,13 @@ export type GameBegin = {
   gameId: string;
   playerA: Omit<PlayerResult, "played">;
   playerB: Omit<PlayerResult, "played">;
+};
+
+export type HistoryGame = {
+  gameId: string;
+  t: number;
+  playerA: HistoryPlayerResult;
+  playerB: HistoryPlayerResult;
 };
 
 type LivePlayerData = {
@@ -57,10 +68,4 @@ export type PlayerStats = {
   winRatio: number;
   mostPlayed: Weapon;
   mostPlayedCount: number;
-};
-
-export type PlayerData = {
-  name: string;
-  history: GameResult[];
-  stats: PlayerStats;
 };

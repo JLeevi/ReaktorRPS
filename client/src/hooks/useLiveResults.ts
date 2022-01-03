@@ -17,7 +17,7 @@ const useLiveResults = () => {
           game.gameId === updatedGame.gameId ? updatedGame : game
         )
       );
-      setTimeout(() => removeGame(updatedGame), 5000);
+      setTimeout(() => removeGame(updatedGame), 7500);
     };
 
     const handleBeginGame = (game: LiveGame) => {

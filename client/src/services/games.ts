@@ -1,16 +1,24 @@
 import axios from "axios";
-import { PlayerData } from "../types";
+import { HistoryGame, PlayerStats } from "../types";
 
 const baseUrl = "/api/games";
 
+type PlayerDataResponse = {
+  games: HistoryGame[];
+  cursor: string;
+  stats?: PlayerStats;
+};
+
 const getAllPlayers = async () => {
-  const { data }: { data: string[] } = await axios.get(baseUrl);
+  const url = `${baseUrl}/players`;
+  const { data }: { data: string[] } = await axios.get(url);
   return data;
 };
 
-const getPlayerData = async (playerName: string) => {
-  const url = `${baseUrl}/player/${playerName}`;
-  const { data }: { data: PlayerData } = await axios.get(url);
+const getPlayerData = async (playerName: string, cursor?: string) => {
+  let url = `${baseUrl}/player/${playerName}`;
+  if (cursor) url += `?cursor=${cursor}`;
+  const { data }: { data: PlayerDataResponse } = await axios.get(url);
   return data;
 };
 
