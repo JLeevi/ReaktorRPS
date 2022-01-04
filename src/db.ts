@@ -3,6 +3,7 @@ import PlayerGame from './models/PlayerGame';
 import {
   GameResult, HistoryPlayerResult, PlayerStats,
 } from './types';
+import errors from './utils/errors';
 import gameCache from './utils/gameCache';
 import gameUtils from './utils/historyGames';
 import logger from './utils/logger';
@@ -103,11 +104,16 @@ const getPlayerStats = async (playerName: string) => {
 const getFullPlayerData = async (playerName: string) => {
   const { games, cursor } = await getPlayerGames(playerName);
   const stats = await getPlayerStats(playerName);
-  return {
+  const response = {
     games,
     cursor,
     stats,
   };
+  if (!stats) {
+    const error = errors.getFetchPlayerErrorMsg(playerName);
+    return { ...response, error };
+  }
+  return response;
 };
 
 export default {

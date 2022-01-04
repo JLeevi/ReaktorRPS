@@ -9,18 +9,16 @@ function PlayerDataBlock({
   stats,
   history,
   loadMore,
-  isLoading,
 }: {
   stats: PlayerStats;
   history: HistoryGame[];
   loadMore: (() => void) | undefined;
-  isLoading: boolean;
 }) {
   return (
     <div className={historyStyles.playerHistory}>
-      <h2 className={liveStyles.header}>{stats.name}</h2>
+      <h2 className={liveStyles.header}>{stats?.name}</h2>
       <Statistics stats={stats} />
-      <HistoryGames loadMore={loadMore} games={history} isLoading={isLoading} />
+      <HistoryGames loadMore={loadMore} games={history} />
     </div>
   );
 }

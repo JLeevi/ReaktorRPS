@@ -53,3 +53,40 @@
     font-weight: var(--font-weight-bold);
     font-family: var(--font-header);
 }
+
+.errorBlock {
+    width: 90%;
+    max-width: 300px;
+    display: block;
+    position: fixed;
+    top: 20px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    background: var(--color-white);
+    box-shadow: var(--shadow);
+    border-radius: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    z-index: 20;
+}
+
+.errorBlock p {
+    color: var(--color-danger);
+    font-weight: var(--font-weight-regular);
+    font-family: var(--font-basic);
+    font-size: var(--font-size-med);
+    line-height: 30px;
+}
+
+.loadingBlock {
+    display: block;
+}
+
+.loadingBlock p {
+    color: var(--color-dark);
+    font-weight: var(--font-weight-regular);
+    font-family: var(--font-basic);
+    font-size: var(--font-size-med);
+}

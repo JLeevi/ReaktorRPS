@@ -6,7 +6,8 @@ type HookValue = [
   { games: HistoryGame[]; stats: PlayerStats | null },
   (playerId: string, cursor?: string) => void,
   (() => void) | undefined,
-  boolean
+  boolean,
+  string | null
 ];
 
 const usePlayerData = (): HookValue => {
@@ -14,11 +15,32 @@ const usePlayerData = (): HookValue => {
   const [gameHistory, setGameHistory] = useState<HistoryGame[]>([]);
   const [nextCursor, setNextCursor] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  const clearError = () => {
+    setErrorMsg(null);
+  };
+
+  const showError = (error: string) => {
+    setErrorMsg(error);
+    setTimeout(clearError, 5000);
+  };
+
+  const clearData = () => {
+    setPlayerStats(null);
+    setGameHistory([]);
+  };
 
   const fetchPlayerData = async (playerId: string, cursor?: string) => {
+    clearData();
     setLoading(true);
     const data = await gameService.getPlayerData(playerId, cursor);
-    const { games, stats } = data;
+    const { games, stats, error } = data;
+    if (error) {
+      showError(error);
+      setLoading(false);
+      return;
+    }
     if (stats) {
       setPlayerStats(stats);
       setGameHistory(games);
@@ -40,6 +62,7 @@ const usePlayerData = (): HookValue => {
     fetchPlayerData,
     nextCursor ? loadMore : undefined,
     loading,
+    errorMsg,
   ];
 };
 

@@ -27,6 +27,17 @@ const startWebSocket = (expressServer: Server) => {
     socket.send(JSON.stringify(data));
   });
 
+  // Keep liveResultClient alive on heroku by sending no-op's
+  // once in 30 seconds
+
+  const noop = () => {};
+
+  const ping = () => {
+    liveResultClient.ping(noop);
+  };
+
+  setInterval(ping, 30 * 1000);
+
   return liveResultClient;
 };
 

@@ -4,11 +4,18 @@ import historyStyles from "../../styles/history.module.css";
 import PlayerDataBlock from "./PlayerDataBlock";
 import TogglableButton from "../misc/TogglableButton";
 import usePlayerData from "../../hooks/usePlayerData";
+import ErrorBlock from "../misc/ErrorBlock";
+import Loading from "../misc/Loading";
 
 function HistoryContainer() {
   const [playerListOpen, setPlayerListOpen] = useState<boolean>(false);
-  const [{ stats, games }, fetchPlayerData, loadMorePlayerData, isLoading] =
-    usePlayerData();
+  const [
+    { stats, games },
+    fetchPlayerData,
+    loadMorePlayerData,
+    isLoading,
+    error,
+  ] = usePlayerData();
 
   const choosePlayer = (playerName: string) => {
     setPlayerListOpen(false);
@@ -30,14 +37,15 @@ function HistoryContainer() {
       {playerListOpen && (
         <PlayerList toggleList={togglePlayerList} choosePlayer={choosePlayer} />
       )}
-      {stats && games && (
+      {games && stats && (
         <PlayerDataBlock
           stats={stats}
           history={games}
           loadMore={loadMorePlayerData}
-          isLoading={isLoading}
         />
       )}
+      {isLoading && <Loading message={"Loading games..."} />}
+      {error && <ErrorBlock error={error} />}
     </div>
   );
 }

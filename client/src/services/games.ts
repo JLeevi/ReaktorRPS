@@ -7,6 +7,7 @@ type PlayerDataResponse = {
   games: HistoryGame[];
   cursor: string;
   stats?: PlayerStats;
+  error?: string;
 };
 
 const getAllPlayers = async () => {
