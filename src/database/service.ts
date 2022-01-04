@@ -12,6 +12,14 @@ const clearFullPlayerData = async () => {
 
 const getPlayerList = async () => playersDb.getPlayerList();
 
+const getGamesForPlayer = async (playerName: string, cursor?: string | undefined) => {
+  const games = await gamesDb.getGamesForPlayer(playerName, cursor);
+  return {
+    games,
+    success: true,
+  };
+};
+
 const getFullPlayerData = async (playerName: string) => {
   const { games, cursor } = await gamesDb.getGamesForPlayer(playerName);
   const stats = await playersDb.getPlayerStats(playerName);
@@ -38,7 +46,7 @@ const createGame = async (result: GameResult) => {
   }
 };
 
-const { getGamesForPlayer, createManyGames } = gamesDb;
+const { createManyGames } = gamesDb;
 const { createManyPlayers } = playersDb;
 
 export default {

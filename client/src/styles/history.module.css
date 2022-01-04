@@ -193,4 +193,5 @@
     cursor: pointer;
     color: var(--color-dark);
     display: block;   
+    margin-top: 40px;
 }

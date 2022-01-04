@@ -46,25 +46,20 @@ const useLiveResults = () => {
 
     const createSocket = () => {
       const ws = new WebSocket(config.WS_LIVE_RESULTS_URL);
-
       ws.onmessage = (evt) => {
         const { data } = evt;
         const event = JSON.parse(data) as LiveEvent;
         handleLiveEvent(event);
       };
-
       ws.onclose = () => {
         console.log("websocket disconnected, attempting reconnect...");
         attemptReconnect();
       };
-
       setWebsocket(ws);
     };
-
     if (!websocket) {
       createSocket();
     }
-
     return () => {
       websocket?.close();
     };
