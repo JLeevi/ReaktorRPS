@@ -3,12 +3,17 @@ import { HistoryGame, PlayerStats } from "../types";
 
 const baseUrl = "/api/games";
 
-type PlayerDataResponse = {
-  games: HistoryGame[];
-  cursor: string;
-  stats?: PlayerStats;
-  error?: string;
-};
+type PlayerDataResponse =
+  | {
+      games: HistoryGame[];
+      cursor: string;
+      stats?: PlayerStats;
+      success: true;
+    }
+  | {
+      success: false;
+      error: string;
+    };
 
 const getAllPlayers = async () => {
   const url = `${baseUrl}/players`;

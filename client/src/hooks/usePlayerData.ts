@@ -31,23 +31,25 @@ const usePlayerData = (): HookValue => {
     setGameHistory([]);
   };
 
-  const fetchPlayerData = async (playerId: string, cursor?: string) => {
-    clearData();
+  const fetchPlayerData = async (playerName: string, cursor?: string) => {
+    if (playerName !== playerStats?.name) {
+      clearData();
+    }
     setLoading(true);
-    const data = await gameService.getPlayerData(playerId, cursor);
-    const { games, stats, error } = data;
-    if (error) {
-      showError(error);
-      setLoading(false);
-      return;
-    }
-    if (stats) {
-      setPlayerStats(stats);
-      setGameHistory(games);
+    const data = await gameService.getPlayerData(playerName, cursor);
+    const { success } = data;
+    if (!success) {
+      showError(data.error);
     } else {
-      setGameHistory((h) => [...h, ...games]);
+      const { games, stats } = data;
+      if (stats) {
+        setPlayerStats(stats);
+        setGameHistory(games);
+      } else {
+        setGameHistory((h) => [...h, ...games]);
+      }
+      setNextCursor(data.cursor);
     }
-    setNextCursor(data.cursor);
     setLoading(false);
   };
 

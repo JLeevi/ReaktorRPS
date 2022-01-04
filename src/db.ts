@@ -44,13 +44,11 @@ const saveGameBatch = async (results: GameResult[]) => {
 };
 
 const clearPlayers = async () => {
-  await Player.deleteMany({});
-  await Player.collection.dropIndexes();
+  await Player.collection.drop();
 };
 
 const clearHistory = async () => {
-  await PlayerGame.deleteMany({});
-  await PlayerGame.collection.dropIndexes();
+  await PlayerGame.collection.drop();
 };
 
 const clearFullPlayerData = async () => {
@@ -104,16 +102,16 @@ const getPlayerStats = async (playerName: string) => {
 const getFullPlayerData = async (playerName: string) => {
   const { games, cursor } = await getPlayerGames(playerName);
   const stats = await getPlayerStats(playerName);
-  const response = {
+  if (!stats) {
+    const error = errors.getFetchPlayerErrorMsg(playerName);
+    return { error, success: false };
+  }
+  return {
     games,
     cursor,
     stats,
+    success: true,
   };
-  if (!stats) {
-    const error = errors.getFetchPlayerErrorMsg(playerName);
-    return { ...response, error };
-  }
-  return response;
 };
 
 export default {
