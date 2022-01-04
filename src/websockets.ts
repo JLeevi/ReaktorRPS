@@ -2,8 +2,8 @@ import { Server } from 'http';
 import WebSocket from 'ws';
 import config from './config';
 import gameService from './services/games';
-import gameCache from './utils/gameCache';
-import liveGames from './utils/liveGames';
+import gameCache from './cache/gameCache';
+import liveGameUtils from './utils/games/liveGames';
 
 const startWebSocket = (expressServer: Server) => {
   const liveResultClient = new WebSocket(config.WS_URL);
@@ -23,20 +23,9 @@ const startWebSocket = (expressServer: Server) => {
 
   webSocketServer.on('connection', (socket) => {
     const games = gameCache.getLiveGames();
-    const data = liveGames.convertInitToLiveEvent(games);
+    const data = liveGameUtils.convertInitToLiveEvent(games);
     socket.send(JSON.stringify(data));
   });
-
-  // Keep liveResultClient alive on heroku by sending no-op's
-  // once in 30 seconds
-
-  const noop = () => {};
-
-  const ping = () => {
-    liveResultClient.ping(noop);
-  };
-
-  setInterval(ping, 30 * 1000);
 
   return liveResultClient;
 };

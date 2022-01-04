@@ -1,6 +1,6 @@
 import gameService from "../services/games";
 import { useState } from "react";
-import { HistoryGame, PlayerStats } from "../types";
+import { HistoryGame, PlayerDataSuccess, PlayerStats } from "../types";
 
 type HookValue = [
   { games: HistoryGame[]; stats: PlayerStats | null },
@@ -29,6 +29,18 @@ const usePlayerData = (): HookValue => {
   const clearData = () => {
     setPlayerStats(null);
     setGameHistory([]);
+    setNextCursor(null);
+  };
+
+  const handlePlayerDataResponse = (data: PlayerDataSuccess) => {
+    const { games, stats } = data;
+    if (stats) {
+      setPlayerStats(stats);
+      setGameHistory(games);
+    } else {
+      setGameHistory((h) => [...h, ...games]);
+    }
+    setNextCursor(data.cursor);
   };
 
   const fetchPlayerData = async (playerName: string, cursor?: string) => {
@@ -41,14 +53,7 @@ const usePlayerData = (): HookValue => {
     if (!success) {
       showError(data.error);
     } else {
-      const { games, stats } = data;
-      if (stats) {
-        setPlayerStats(stats);
-        setGameHistory(games);
-      } else {
-        setGameHistory((h) => [...h, ...games]);
-      }
-      setNextCursor(data.cursor);
+      handlePlayerDataResponse(data);
     }
     setLoading(false);
   };

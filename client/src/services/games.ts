@@ -1,19 +1,7 @@
 import axios from "axios";
-import { HistoryGame, PlayerStats } from "../types";
+import { PlayerDataResponse } from "../types";
 
 const baseUrl = "/api/games";
-
-type PlayerDataResponse =
-  | {
-      games: HistoryGame[];
-      cursor: string;
-      stats?: PlayerStats;
-      success: true;
-    }
-  | {
-      success: false;
-      error: string;
-    };
 
 const getAllPlayers = async () => {
   const url = `${baseUrl}/players`;

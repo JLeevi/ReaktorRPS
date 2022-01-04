@@ -69,3 +69,17 @@ export type PlayerStats = {
   mostPlayed: Weapon;
   mostPlayedCount: number;
 };
+
+export type PlayerDataSuccess = {
+  games: HistoryGame[];
+  cursor: string;
+  stats?: PlayerStats;
+  success: true;
+};
+
+export type PlayerDataError = {
+  success: false;
+  error: string;
+};
+
+export type PlayerDataResponse = PlayerDataSuccess | PlayerDataError;

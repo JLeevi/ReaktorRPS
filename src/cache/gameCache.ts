@@ -1,9 +1,9 @@
 import {
   GameBegin, LiveGame, PlayerStats,
 } from '../types';
-import cache from '../cache';
-import constants from './constants';
-import liveGameUtils from './liveGames';
+import cache from './cache';
+import constants from '../utils/constants';
+import liveGameUtils from '../utils/games/liveGames';
 
 const getPlayerStats = (playerName: string): PlayerStats => cache.get(`players/stats/${playerName}`)
   ?? { ...constants.initialPlayerStats, name: playerName };
