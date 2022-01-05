@@ -12,6 +12,9 @@ const initialPlayerStats: Omit<Omit<PlayerStats, 'name'>, 'mostPlayed'> = {
   mostPlayedCount: 0,
 };
 
+const GAME_PAGE_SIZE = 50;
+
 export default {
   initialPlayerStats,
+  GAME_PAGE_SIZE,
 };

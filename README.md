@@ -46,6 +46,6 @@ The user can also view any players historical games and statistics.
 It is needed because:
 - The external endpoint **/rps/history** is quite slow, and processing the necessary pages of data to retrieve a certain players historical games simply using the external API would be slow.
 - Pre-processing the games in a desirable format and then retrieving the necessary data from a db makes the process much faster and cleaner.
-- There is quite a bit of data (~500 Mb) and storing this all in an in-memory cache is not desirable.
+- There is quite a bit of data (~few hundred Mb) and storing this all in an in-memory cache is not desirable.
 
 

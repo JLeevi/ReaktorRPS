@@ -3,7 +3,7 @@ import {
 } from '../types';
 import cache from './cache';
 import constants from '../utils/constants';
-import liveGameUtils from '../utils/games/liveGames';
+import converters from '../utils/games/converters';
 
 const getPlayerStats = (playerName: string): PlayerStats => cache.get(`players/stats/${playerName}`)
   ?? { ...constants.initialPlayerStats, name: playerName };
@@ -28,7 +28,7 @@ const initPlayerSet = (players: string[]) => {
 
 const addLiveGame = (game: GameBegin) => {
   const prev: LiveGame[] = cache.get('liveGames') ?? [];
-  const newGame = liveGameUtils.convertBeginToLiveGame(game);
+  const newGame = converters.convertBeginToLiveGame(game);
   const updated = [...prev, newGame];
   cache.set('liveGames', updated);
 };

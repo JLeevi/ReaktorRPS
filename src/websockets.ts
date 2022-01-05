@@ -1,9 +1,9 @@
 import { Server } from 'http';
 import WebSocket from 'ws';
 import config from './config';
-import gameService from './services/games';
 import gameCache from './cache/gameCache';
-import liveGameUtils from './utils/games/liveGames';
+import liveResultService from './services/liveResultService';
+import converters from './utils/games/converters';
 
 const startWebSocket = (expressServer: Server) => {
   const liveResultClient = new WebSocket(config.WS_URL);
@@ -13,7 +13,7 @@ const startWebSocket = (expressServer: Server) => {
   });
 
   liveResultClient.on('message', (data) => {
-    const parsedResult = gameService.handleLiveResult(data);
+    const parsedResult = liveResultService.handleLiveResult(data);
     webSocketServer.clients.forEach((client) => {
       if (client.readyState === WebSocket.OPEN) {
         client.send(JSON.stringify(parsedResult));
@@ -23,7 +23,7 @@ const startWebSocket = (expressServer: Server) => {
 
   webSocketServer.on('connection', (socket) => {
     const games = gameCache.getLiveGames();
-    const data = liveGameUtils.convertInitToLiveEvent(games);
+    const data = converters.convertInitToLiveEvent(games);
     socket.send(JSON.stringify(data));
   });
 

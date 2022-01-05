@@ -2,7 +2,6 @@ import {
   HistoryPlayerResult, PlayerStats, RelativeGameOutcome, Weapon,
 } from '../../types';
 import gameCache from '../../cache/gameCache';
-import databaseService from '../../database/service';
 
 const getMostPlayedHand = (rocks: number, papers: number, scissors:number): [Weapon, number] => {
   const maxVal = Math.max(rocks, papers, scissors);
@@ -50,22 +49,6 @@ const getUpdatedPlayerStats = (player: HistoryPlayerResult) => {
   return newStats;
 };
 
-const updatePlayerStatsToCache = (playerResult: HistoryPlayerResult) => {
-  gameCache.addToPlayerSet(playerResult.name);
-  const stats: PlayerStats = getUpdatedPlayerStats(playerResult);
-  const { name } = playerResult;
-  gameCache.setPlayerStats(stats, name);
-};
-
-const pushPlayerCacheToDb = () => {
-  const playerSet = gameCache.getPlayerSet() ?? new Set([]);
-  const playerNames = [...playerSet];
-  const playerData = playerNames.map(gameCache.getPlayerStats);
-  databaseService.createManyPlayers(playerData);
-};
-
 export default {
   getUpdatedPlayerStats,
-  updatePlayerStatsToCache,
-  pushPlayerCacheToDb,
 };
