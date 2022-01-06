@@ -54,6 +54,49 @@
     font-family: var(--font-header);
 }
 
+.footer {
+    display: block;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 40px 0;
+    height: auto;
+    margin-top: 150px;
+}
+
+.footer div {
+    display: inline-block;
+    width: auto;
+    padding: 20px;
+    box-sizing: border-box;
+    background: var(--color-white);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+}
+
+.footer img {
+    width: 40px;
+    margin-bottom: -10px;
+    height: auto;
+    display: inline-block;
+}
+
+.footer p {
+    margin-left: 20px;
+    display: inline-block;
+    color: var(--color-dark);
+    font-size: var(--font-size-med);
+    font-weight: var(--font-weight-regular);
+    font-family: var(--font-basic);
+}
+
+.footer a {
+    color: var(--color-brand);
+    font-weight: var(--font-weight-bold);
+    text-decoration: underline;
+}
+
 .errorBlock {
     width: 90%;
     max-width: 300px;

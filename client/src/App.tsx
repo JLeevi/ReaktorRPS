@@ -2,7 +2,8 @@ import React from "react";
 import LiveGames from "./components/liveGames/LiveGames";
 import liveStyles from "./styles/games.module.css";
 import HistoryContainer from "./components/playerData/HistoryContainer";
-import Header from "./components/Header";
+import Header from "./components/misc/Header";
+import Footer from "./components/misc/Footer";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Header />
       <LiveGames />
       <HistoryContainer />
+      <Footer />
     </div>
   );
 }

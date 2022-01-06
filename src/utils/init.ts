@@ -23,6 +23,16 @@ const saveHistoryPage = async (page: HistoryPage) => {
   });
 };
 
+const fetchHistoryPage = async (pageUrl: string): Promise<HistoryPage | undefined> => {
+  try {
+    const { data }: {data: HistoryPage} = await axios.get(pageUrl);
+    return data;
+  } catch (error) {
+    logger.error('Error fetching history page: \n', error);
+    return undefined;
+  }
+};
+
 /*
  Build up database from the external api pages when server is started up.
  Function recursively goes through the pages, saves the games
@@ -34,17 +44,16 @@ const initDatabaseCache = async (url?: string) => {
     await gameService.clearGameData();
   }
   const pageUrl = url ?? config.HISTORY_URL;
-  const { data }: {data: HistoryPage} = await axios.get(pageUrl);
+  const data = await fetchHistoryPage(pageUrl);
+  if (!data) {
+    setTimeout(() => initDatabaseCache(url), 1000);
+    return;
+  }
   await saveHistoryPage(data);
   const { cursor } = data;
   const nextUrl = `${config.API_URL}${cursor}`;
   if (cursor) {
-    try {
-      initDatabaseCache(nextUrl);
-    } catch (error) {
-      logger.error('Error in initDatabaseCache:\n', error);
-      initDatabaseCache(nextUrl);
-    }
+    initDatabaseCache(nextUrl);
   } else {
     pushPlayerCacheToDb();
   }
