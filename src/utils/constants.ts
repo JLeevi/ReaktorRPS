@@ -14,7 +14,12 @@ const initialPlayerStats: Omit<Omit<PlayerStats, 'name'>, 'mostPlayed'> = {
 
 const GAME_PAGE_SIZE = 50;
 
+// Longest a game can exist before we check the historical results
+// for a result (4mins in milliseconds)
+const LIVE_GAME_TIMEOUT_MS = 4 * 60 * 1000;
+
 export default {
   initialPlayerStats,
   GAME_PAGE_SIZE,
+  LIVE_GAME_TIMEOUT_MS,
 };

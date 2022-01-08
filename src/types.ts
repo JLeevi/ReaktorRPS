@@ -82,3 +82,5 @@ export type PlayerInfo = {
     name: string,
     id: string
 }
+
+export type SendWSUpdate = (event: LiveEvent) => void;

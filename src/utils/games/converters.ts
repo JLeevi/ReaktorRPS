@@ -1,5 +1,5 @@
 import {
-  GameBegin, GameResult, HistoryGame, LiveEvent, LiveGame,
+  GameBegin, GameResult, HistoryGame, LiveEvent, LiveGame, LiveUpdate,
 } from '../../types';
 import gameUtils from './outcomes';
 import dbUtils from '../database';
@@ -39,7 +39,7 @@ const convertBeginToLiveGame = (game: GameBegin): LiveGame => {
   };
 };
 
-const convertBeginToLiveEvent = (game: GameBegin): LiveEvent => {
+const convertBeginToLiveEvent = (game: GameBegin): LiveUpdate => {
   const data = convertBeginToLiveGame(game);
   return {
     type: 'GAME_BEGIN',
@@ -47,7 +47,7 @@ const convertBeginToLiveEvent = (game: GameBegin): LiveEvent => {
   };
 };
 
-const convertResultToLiveEvent = (result: GameResult): LiveEvent => {
+const convertResultToLiveEvent = (result: GameResult): LiveUpdate => {
   const { gameId, playerA, playerB } = result;
   const { aOutcome, bOutcome } = gameUtils.getGameOutcomes(result);
   const liveGame: LiveGame = {

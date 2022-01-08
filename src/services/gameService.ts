@@ -24,12 +24,12 @@ const createManyGames = async (gameResults: GameResult[]) => {
   }
 };
 
-const clearGameData = async () => {
+const clearGames = async () => {
   await PlayerGame.collection.drop();
 };
 
 export default {
   createGame,
   createManyGames,
-  clearGameData,
+  clearGames,
 };

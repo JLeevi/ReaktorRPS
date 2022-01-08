@@ -5,6 +5,7 @@ import gameCache from './cache/gameCache';
 import liveResultService from './services/liveResultService';
 import converters from './utils/games/converters';
 import logger from './utils/logger';
+import { LiveEvent } from './types';
 
 const startWebSocket = (expressServer: Server) => {
   const liveResultClient = new WebSocket(config.WS_URL);
@@ -18,13 +19,18 @@ const startWebSocket = (expressServer: Server) => {
     startWebSocket(expressServer);
   };
 
-  liveResultClient.on('message', (data) => {
-    const parsedResult = liveResultService.handleLiveResult(data);
+  const sendEventToClients = (event: LiveEvent) => {
     webSocketServer.clients.forEach((client) => {
       if (client.readyState === WebSocket.OPEN) {
-        client.send(JSON.stringify(parsedResult));
+        client.send(JSON.stringify(event));
       }
     });
+  };
+
+  liveResultClient.on('message', (data) => {
+    const liveEvent = liveResultService.parseLiveResult(data);
+    liveResultService.addLiveGameTimeout(liveEvent.data.gameId, sendEventToClients);
+    sendEventToClients(liveEvent);
   });
 
   webSocketServer.on('connection', (socket) => {

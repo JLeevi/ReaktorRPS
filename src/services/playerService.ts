@@ -32,10 +32,6 @@ const getPlayerStats = async (name: string) => {
   return stats;
 };
 
-const clearPlayerData = async () => {
-  await Player.collection.drop();
-};
-
 const updatePlayerStatsToCache = (result: HistoryPlayerResult) => {
   const stats: PlayerStats = playerUtils.getUpdatedPlayerStats(result);
   const { name } = result;
@@ -53,6 +49,25 @@ const createManyPlayers = async (players: PlayerStats[]) => {
   await Player.insertMany(players);
 };
 
+const updateManyPlayers = async (players: PlayerStats[]) => {
+  await Player.bulkWrite(players.map((p) => ({
+    updateOne: {
+      filter: { name: p.name },
+      update: { $set: { ...p } },
+      upsert: true,
+    },
+  })));
+};
+
+const initPlayersToCache = async () => {
+  const players = await Player.find({});
+  players.map((p) => gameCache.setPlayerStats(p, p.name));
+};
+
+const clearPlayers = async () => {
+  await Player.collection.drop();
+};
+
 export default {
   getPlayerList,
   getPlayerGames,
@@ -60,5 +75,7 @@ export default {
   updatePlayerStatsToCache,
   updatePlayerStats,
   createManyPlayers,
-  clearPlayerData,
+  updateManyPlayers,
+  initPlayersToCache,
+  clearPlayers,
 };
