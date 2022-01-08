@@ -49,21 +49,6 @@ const createManyPlayers = async (players: PlayerStats[]) => {
   await Player.insertMany(players);
 };
 
-const updateManyPlayers = async (players: PlayerStats[]) => {
-  await Player.bulkWrite(players.map((p) => ({
-    updateOne: {
-      filter: { name: p.name },
-      update: { $set: { ...p } },
-      upsert: true,
-    },
-  })));
-};
-
-const initPlayersToCache = async () => {
-  const players = await Player.find({});
-  players.map((p) => gameCache.setPlayerStats(p, p.name));
-};
-
 const clearPlayers = async () => {
   await Player.collection.drop();
 };
@@ -75,7 +60,5 @@ export default {
   updatePlayerStatsToCache,
   updatePlayerStats,
   createManyPlayers,
-  updateManyPlayers,
-  initPlayersToCache,
   clearPlayers,
 };
